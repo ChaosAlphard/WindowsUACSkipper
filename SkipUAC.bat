@@ -23,6 +23,6 @@ if %errorlevel% neq 0 (
 :: 创建计划任务
 schtasks /create /tn "UACSkip\%~n1" /tr "%~1" /rl highest /sc once /sd 2000/01/01 /st 00:00
 :: 创建启动方式
-echo schtasks /run /tn "UACSkip\%~n1" > %~n1.bat
+echo schtasks /run /tn "UACSkip\%~n1" >%~n1.bat
 
 pause
