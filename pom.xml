@@ -118,7 +118,7 @@
                 <artifactId>javapackager</artifactId>
                 <version>1.6.7</version>
                 <configuration>
-                    <mainClass>io.github.chaosalphard.UACSkipper.HelloApplicationKt</mainClass>
+                    <mainClass>io.github.chaosalphard.windowsuacskipper.UacSkipperMainKt</mainClass>
                     <createZipball>true</createZipball>
                     <administratorRequired>true</administratorRequired>
                 </configuration>
