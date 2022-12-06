@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="rootBox" alignment="CENTER_LEFT" prefHeight="500.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.chaosalphard.windowsuacskipper.controller.MainController">
+
+<HBox prefHeight="40.0" prefWidth="800.0">
+    <children>
+        <Label fx:id="filePath" prefHeight="40.0" prefWidth="480.0" styleClass="lbl, lbl-default" text="请选择文件">
+            <font><Font size="18.0" /></font>
+        </Label>
+        <Button fx:id="btnChooseFile" onAction="#onChooseFileButtonClick" prefHeight="40.0" prefWidth="120.0" styleClass="btn, btn-default" text="选择文件" textAlignment="CENTER">
+            <font><Font size="18.0" /></font>
+        </Button>
+        <Button fx:id="btnExecute" disable="true" onAction="#onExecuteButtonClick" prefHeight="40.0" prefWidth="200.0" styleClass="btn, btn-primary" text="注册并生成快捷启动方式" textAlignment="CENTER">
+            <font><Font size="18.0" /></font>
+        </Button>
+    </children>
+</HBox>
+<VBox prefHeight="460.0" prefWidth="800.0">
+    <children>
+        <TextArea fx:id="execResult" prefHeight="460.0" prefWidth="800.0">
+            <font><Font name="Consolas" size="16.0" /></font>
+        </TextArea>
+    </children>
+</VBox>
+
+</VBox>
