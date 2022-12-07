@@ -1,0 +1,69 @@
+package io.github.chaosalphard.windowsuacskipper.util
+
+import java.io.File
+
+/**
+ * @author wan
+ * @version 1.0.0
+ * Date 2022/12/07 19:36
+ */
+class FileUtil {
+    companion object {
+        /**
+         * 创建文件快捷方式
+         */
+        fun createShortcut(shortcut: File, source: File, args: String = "") {
+            shortcut.parentFile.mkdirs()
+            shortcut.delete()
+            shortcut.createNewFile()
+            writeShortcutFile(shortcut, source, args)
+        }
+
+        private fun writeShortcutFile(shortcut: File, source: File, args: String = "") {
+            val splitPath = source.absolutePath.split(":\\\\".toRegex(), 2).toTypedArray()
+            val charset = charset("gbk")
+            val bytes = byteArrayOf(
+                *Shortcut.headByte, *Shortcut.fileAttr,
+                *Shortcut.fixedValueOne,
+                *splitPath[0].toByteArray(charset),
+                *Shortcut.fixedValueTwo,
+                *splitPath[1].toByteArray(charset),
+                *" ${args.trim()}".toByteArray(charset)
+            )
+
+            shortcut.writeBytes(bytes)
+        }
+    }
+
+    private class Shortcut {
+        companion object {
+            val headByte: ByteArray = byteArrayOf(0x4c, 0x00, 0x00, 0x00, 0x01, 0x14, 0x02, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0xc0.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)
+
+            val fileAttr: ByteArray = byteArrayOf(
+                0x93.toByte(), 0x00, 0x08, 0x00,  //可选文件属性
+                0x20, 0x00, 0x00, 0x00,  //目标文件属性
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  //文件创建时间
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  //文件修改时间
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  //文件最后一次访问时间
+                0x00, 0x00, 0x00, 0x00,  //文件长度
+                0x00, 0x00, 0x00, 0x00,  //自定义图标个数
+                0x01, 0x00, 0x00, 0x00,  //打开时窗口状态
+                0x00, 0x00, 0x00, 0x00,  //热键
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 //未知
+            )
+
+            val fixedValueOne: ByteArray = byteArrayOf(
+                0x83.toByte(), 0x00, 0x14, 0x00, 0x1F, 0x50, 0xE0.toByte(), 0x4F, 0xD0.toByte(),
+                0x20, 0xEA.toByte(), 0x3A, 0x69, 0x10, 0xA2.toByte(),
+                0xD8.toByte(), 0x08, 0x00, 0x2B, 0x30, 0x30, 0x9D.toByte(), 0x19, 0x00, 0x2f
+            )
+
+            val fixedValueTwo: ByteArray = byteArrayOf(
+                0x3A, 0x5C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x00,
+                0x32, 0x00, 0x04, 0x00, 0x00, 0x00, 0x67, 0x50, 0x91.toByte(), 0x3C, 0x20, 0x00
+            )
+        }
+    }
+}

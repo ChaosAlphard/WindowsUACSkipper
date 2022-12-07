@@ -121,6 +121,7 @@
                     <mainClass>io.github.chaosalphard.windowsuacskipper.UacSkipperMainKt</mainClass>
                     <createZipball>true</createZipball>
                     <administratorRequired>true</administratorRequired>
+                    <platform>windows</platform>
                 </configuration>
                 <executions>
                     <execution>
@@ -130,7 +131,7 @@
                             <goal>package</goal>
                         </goals>
                         <configuration>
-                            <name>${project.name}-with-jre.${project.version}</name>
+                            <name>${project.name}-with-jre</name>
                             <bundleJre>true</bundleJre>
                             <jrePath>C:/Software/Zulu17.38.21_Jre17.0.5</jrePath>
                         </configuration>
@@ -142,7 +143,7 @@
                             <goal>package</goal>
                         </goals>
                         <configuration>
-                            <name>${project.name}-without-jre.${project.version}</name>
+                            <name>${project.name}-without-jre</name>
                             <bundleJre>false</bundleJre>
                         </configuration>
                     </execution>

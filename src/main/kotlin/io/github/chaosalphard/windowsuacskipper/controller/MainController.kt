@@ -20,6 +20,7 @@ import java.util.UUID
  * @version 1.0.0
  * Date 2022/12/06 19:09
  */
+@Suppress("unused")
 class MainController : BaseController() {
     companion object {
         @JvmStatic
@@ -62,14 +63,16 @@ class MainController : BaseController() {
         }
         val schTaskId = UUID.randomUUID().toString().filterNot { '-' == it }
 
+        /* 参考文档: https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/schtasks-create?source=recommendations */
         val argList = listOf(
             "schtasks", "/create",
             "/tn", "\"UACSkip\\${schTaskId}\"",
             "/tr", "\"${nonNullFile.absolutePath}\"",
             "/rl", "highest",
             "/sc", "once",
-            "/sd", "2000/01/01",
-            "/st", "00:00"
+            // "/sd", "2000/01/01", // 不指定时默认为计算机上的当前日期
+            "/st", "00:00",
+            "/f"
         )
         GlobalScope.launch (Dispatchers.Default) {
             val result: List<String> = CommandUtil.runAsStringListResult(argList)
@@ -81,7 +84,7 @@ class MainController : BaseController() {
             val startUp = createBatStartUp(nonNullFile.nameWithoutExtension, schTaskId)
             execResult.appendText("\n已在${BAT_OUT_DIR}目录下创建快捷启动文件\"${startUp.name}\"")
         }
-        val clg = argList.joinToString(" ","正在执行指令, 若长时间未响应可将指令复制到cmd中运行: ",)
+        val clg = argList.joinToString(" ","正在执行指令, 若长时间未响应可将指令复制到cmd中运行: ")
         println(clg)
         execResult.text = "[${TimeUtil.nowInstant()}]\n"
         execResult.appendText(clg)
